@@ -1,0 +1,21 @@
+services:
+  test:
+    image: $GO_IMAGE
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    command: go test -coverprofile cover.out -v ./...
+    secrets:
+      - test_secret
+    environment:
+      - MY_SECRET_FILE=/run/secrets/test_secret
+      - MY_ENV_VAR=8IZoM8dq2FDkP+yhhGGzFhn+ZaxbHvQDxQNjXoxr
+    working_dir: /app
+
+secrets:
+  test_secret:
+    file: testsecret
